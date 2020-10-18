@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       theme: ThemeData(
-          focusColor: Colors.blue[800],
+          focusColor: Colors.blue[900],
           primaryIconTheme: IconThemeData(
             color: Colors.grey[700],
           )),

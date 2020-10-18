@@ -1,5 +1,7 @@
 # google_meet_ui
 
+<img align="center" alt="GIF" src="gif.gif"/>
+
 A new Flutter project.
 
 ## Getting Started

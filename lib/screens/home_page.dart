@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_meet_ui/carousel/select_photo.dart';
 import 'package:google_meet_ui/screens/join_with_code_page.dart';
 import 'package:google_meet_ui/screens/profile_page.dart';
+import 'package:google_meet_ui/widgets/custom_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +15,17 @@ class _HomePageState extends State<HomePage> {
   int photoIndex = 0;
   int titleIndex = 0;
   int desIndex = 0;
+
+  List<String> name = [
+    'Debajyati Banerjee',
+    'Dibbo Banerjee',
+    'Among Us',
+  ];
+  List<String> email = [
+    'debajyatibanerjee0002@gmail.com',
+    'debajyatibanerjee.rl.0002@gmail.com',
+    'debajyatibanerjee.amonus.0002@gmail.com',
+  ];
 
   List<String> photos = [
     'assets/pic1.jpeg',
@@ -27,6 +39,27 @@ class _HomePageState extends State<HomePage> {
     'No one can join a meeting unless invited or admitted by the host',
     'Tab new meeting to get a link that you can send to people taht you want to meet with'
   ];
+
+  Widget CustomListile(String name, String email, Color color) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: color,
+        child: Text(name[0]),
+      ),
+      title: Text(name),
+      subtitle: Text(email),
+    );
+  }
+
+  Widget CustomListileone() {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: AssetImage('assets/profile.jpeg'),
+      ),
+      title: Text('Debajyati Banerjee'),
+      subtitle: Text('debajyatibanerjee0002@gmail.com'),
+    );
+  }
 
   void _previousImage() {
     setState(() {
@@ -42,62 +75,6 @@ class _HomePageState extends State<HomePage> {
       titleIndex = titleIndex < title.length - 1 ? titleIndex + 1 : titleIndex;
       desIndex = desIndex < des.length - 1 ? desIndex + 1 : desIndex;
     });
-  }
-
-  Widget CustomWidget(String name, IconData icon) {
-    return FlatButton(
-      onPressed: () {},
-      child: Container(
-        padding: EdgeInsets.only(left: 15),
-        height: 40,
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Icon(
-              icon,
-              color: Colors.grey[700],
-              size: 20,
-            ),
-            SizedBox(width: 20),
-            Text(
-              name,
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget CustomWidgetBottomSheet(String name, IconData icon) {
-    return Expanded(
-      child: FlatButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: Container(
-          padding: EdgeInsets.only(left: 5, top: 5),
-          height: 40,
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(
-                icon,
-                color: Colors.grey[800],
-                size: 25,
-              ),
-              SizedBox(width: 10),
-              Text(
-                name,
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -137,9 +114,9 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.grey[300],
                   thickness: 1.4,
                 ),
-                CustomWidget('Settings', Icons.settings_outlined),
-                CustomWidget('Send feedback', Icons.feedback_outlined),
-                CustomWidget('Help', Icons.help_rounded),
+                CustomWidget('Settings', Icons.settings_outlined, context),
+                CustomWidget('Send feedback', Icons.feedback_outlined, context),
+                CustomWidget('Help', Icons.help_rounded, context),
               ],
             ),
           ),
@@ -150,7 +127,9 @@ class _HomePageState extends State<HomePage> {
           title: Text(
             'Meet',
             style: TextStyle(
-              color: Colors.grey[700],
+              fontSize: 21,
+              fontWeight: FontWeight.w400,
+              color: Colors.grey[800],
             ),
           ),
           centerTitle: true,
@@ -158,13 +137,161 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(right: 10, top: 5, bottom: 5),
               child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
-                    ),
-                  );
-                },
+                onTap: () => showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    isDismissible: true,
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        margin: EdgeInsets.only(left: 12, right: 12),
+                        height: MediaQuery.of(context).size.height / 1.15,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12),
+                          ),
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 00, left: 0, right: 0),
+                          // color: Colors.red,
+                          // height: MediaQuery.of(context).size.height,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: MediaQuery.of(context).size.width,
+                                // color: Colors.green,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 5),
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.close,
+                                          size: 25,
+                                        ),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width:
+                                          MediaQuery.of(context).size.width / 5,
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          // color: Colors.blue,
+                                          image: DecorationImage(
+                                            alignment: Alignment.centerLeft,
+                                            image: AssetImage(
+                                                'assets/google.jpeg'),
+                                            // fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height - 140,
+                                // color: Colors.yellow,
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        CustomListileone(),
+                                        FlatButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            side: BorderSide(
+                                              color: Colors.grey,
+                                              width: 0.5,
+                                            ),
+                                          ),
+                                          onPressed: () {},
+                                          child: Text(
+                                            'Manage your Google Account',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(height: 20),
+                                        Divider(
+                                          thickness: 1,
+                                          color: Colors.grey,
+                                        ),
+                                        SizedBox(height: 10),
+                                        CustomListile(
+                                            name[0], email[0], Colors.green),
+                                        SizedBox(height: 15),
+                                        CustomListile(
+                                            name[1], email[1], Colors.yellow),
+                                        SizedBox(height: 15),
+                                        CustomListile(
+                                            name[2], email[2], Colors.red),
+                                        SizedBox(height: 15),
+                                        CustomListile(
+                                            name[0], email[0], Colors.blue),
+                                        SizedBox(height: 15),
+                                        CustomWidget('Add another account',
+                                            Icons.person_add_alt, context),
+                                        SizedBox(height: 15),
+                                        CustomWidget(
+                                            'Manage accounts on this device',
+                                            Icons.settings,
+                                            context),
+                                        SizedBox(height: 15),
+                                        Divider(
+                                          thickness: 1,
+                                          color: Colors.grey,
+                                        ),
+                                        SizedBox(height: 15),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            FlatButton(
+                                              child: Text(
+                                                'Privacy Policy',
+                                                style: TextStyle(fontSize: 10),
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                            Icon(
+                                              Icons.circle,
+                                              size: 5,
+                                            ),
+                                            FlatButton(
+                                              child: Text(
+                                                'Privacy Policy',
+                                                style: TextStyle(fontSize: 10),
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
                 child: CircleAvatar(
                   backgroundImage: AssetImage("assets/profile.jpeg"),
                   radius: 20.0,
@@ -195,29 +322,32 @@ class _HomePageState extends State<HomePage> {
                             ),
                             onPressed: () {
                               showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              3,
-                                      child: Column(
-                                        children: [
-                                          CustomWidgetBottomSheet(
-                                              'Get a meeting link to share',
-                                              Icons.link_outlined),
-                                          CustomWidgetBottomSheet(
-                                              'Start an instant meeting',
-                                              Icons.video_call_outlined),
-                                          CustomWidgetBottomSheet(
-                                              'Schedule in google calendar',
-                                              Icons.calendar_today_outlined),
-                                          CustomWidgetBottomSheet(
-                                              'Close', Icons.close_outlined),
-                                        ],
-                                      ),
-                                    );
-                                  });
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 3,
+                                    child: Column(
+                                      children: [
+                                        CustomWidgetBottomSheet(
+                                            'Get a meeting link to share',
+                                            Icons.link_outlined,
+                                            context),
+                                        CustomWidgetBottomSheet(
+                                            'Start an instant meeting',
+                                            Icons.video_call_outlined,
+                                            context),
+                                        CustomWidgetBottomSheet(
+                                            'Schedule in google calendar',
+                                            Icons.calendar_today_outlined,
+                                            context),
+                                        CustomWidgetBottomSheet('Close',
+                                            Icons.close_outlined, context),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
                             },
                             child: Text(
                               'New meeting',
@@ -350,4 +480,30 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+//   void _onPressProfile() {
+//     showModalBottomSheet(
+//       useRootNavigator: true,
+//       isDismissible: true,
+//       backgroundColor: Colors.transparent,
+//       isScrollControlled: true,
+//       enableDrag: true,
+//       // isDismissible: true,
+//       context: context,
+//       builder: (BuildContext context) {
+//         return Container(
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.only(
+//               topLeft: Radius.circular(15),
+//               topRight: Radius.circular(15),
+//             ),
+//           ),
+//           margin: EdgeInsets.only(left: 13, right: 13),
+//           height: MediaQuery.of(context).size.height / 3,
+//           // child: ProfilePage(),
+//         );
+//       },
+//     );
+//   }
 }
